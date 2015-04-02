@@ -1,0 +1,10 @@
+@()
+
+@basetree("ConLL Parse") {
+
+<script type='text/javascript' src='@routes.Assets.at("javascripts/script.js")'></script>
+
+<textarea id="inputtext" name="inputtext" cols="100" rows="10"></textarea>
+<br>
+<button onclick="click_btn('@routes.Application.processConll()')">Parse</button>
+}

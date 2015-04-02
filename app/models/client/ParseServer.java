@@ -36,7 +36,7 @@ public class ParseServer {
 
     public List<String> getServerInfo() throws org.apache.thrift.TException;
 
-    public List<String> ParseText(String language, List<String> text) throws org.apache.thrift.TException;
+    public List<String> ParseText(String language, String text) throws org.apache.thrift.TException;
 
   }
 
@@ -44,7 +44,7 @@ public class ParseServer {
 
     public void getServerInfo(org.apache.thrift.async.AsyncMethodCallback<AsyncClient.getServerInfo_call> resultHandler) throws org.apache.thrift.TException;
 
-    public void ParseText(String language, List<String> text, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.ParseText_call> resultHandler) throws org.apache.thrift.TException;
+    public void ParseText(String language, String text, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.ParseText_call> resultHandler) throws org.apache.thrift.TException;
 
   }
 
@@ -90,13 +90,13 @@ public class ParseServer {
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "getServerInfo failed: unknown result");
     }
 
-    public List<String> ParseText(String language, List<String> text) throws org.apache.thrift.TException
+    public List<String> ParseText(String language, String text) throws org.apache.thrift.TException
     {
       send_ParseText(language, text);
       return recv_ParseText();
     }
 
-    public void send_ParseText(String language, List<String> text) throws org.apache.thrift.TException
+    public void send_ParseText(String language, String text) throws org.apache.thrift.TException
     {
       ParseText_args args = new ParseText_args();
       args.setLanguage(language);
@@ -161,7 +161,7 @@ public class ParseServer {
       }
     }
 
-    public void ParseText(String language, List<String> text, org.apache.thrift.async.AsyncMethodCallback<ParseText_call> resultHandler) throws org.apache.thrift.TException {
+    public void ParseText(String language, String text, org.apache.thrift.async.AsyncMethodCallback<ParseText_call> resultHandler) throws org.apache.thrift.TException {
       checkReady();
       ParseText_call method_call = new ParseText_call(language, text, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
@@ -170,8 +170,8 @@ public class ParseServer {
 
     public static class ParseText_call extends org.apache.thrift.async.TAsyncMethodCall {
       private String language;
-      private List<String> text;
-      public ParseText_call(String language, List<String> text, org.apache.thrift.async.AsyncMethodCallback<ParseText_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      private String text;
+      public ParseText_call(String language, String text, org.apache.thrift.async.AsyncMethodCallback<ParseText_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
         this.language = language;
         this.text = text;
@@ -912,7 +912,7 @@ public class ParseServer {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("ParseText_args");
 
     private static final org.apache.thrift.protocol.TField LANGUAGE_FIELD_DESC = new org.apache.thrift.protocol.TField("language", org.apache.thrift.protocol.TType.STRING, (short)1);
-    private static final org.apache.thrift.protocol.TField TEXT_FIELD_DESC = new org.apache.thrift.protocol.TField("text", org.apache.thrift.protocol.TType.LIST, (short)2);
+    private static final org.apache.thrift.protocol.TField TEXT_FIELD_DESC = new org.apache.thrift.protocol.TField("text", org.apache.thrift.protocol.TType.STRING, (short)2);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
@@ -921,7 +921,7 @@ public class ParseServer {
     }
 
     public String language; // required
-    public List<String> text; // required
+    public String text; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -991,8 +991,7 @@ public class ParseServer {
       tmpMap.put(_Fields.LANGUAGE, new org.apache.thrift.meta_data.FieldMetaData("language", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
       tmpMap.put(_Fields.TEXT, new org.apache.thrift.meta_data.FieldMetaData("text", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
-              new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING))));
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(ParseText_args.class, metaDataMap);
     }
@@ -1002,7 +1001,7 @@ public class ParseServer {
 
     public ParseText_args(
       String language,
-      List<String> text)
+      String text)
     {
       this();
       this.language = language;
@@ -1017,11 +1016,7 @@ public class ParseServer {
         this.language = other.language;
       }
       if (other.isSetText()) {
-        List<String> __this__text = new ArrayList<String>();
-        for (String other_element : other.text) {
-          __this__text.add(other_element);
-        }
-        this.text = __this__text;
+        this.text = other.text;
       }
     }
 
@@ -1059,26 +1054,11 @@ public class ParseServer {
       }
     }
 
-    public int getTextSize() {
-      return (this.text == null) ? 0 : this.text.size();
-    }
-
-    public java.util.Iterator<String> getTextIterator() {
-      return (this.text == null) ? null : this.text.iterator();
-    }
-
-    public void addToText(String elem) {
-      if (this.text == null) {
-        this.text = new ArrayList<String>();
-      }
-      this.text.add(elem);
-    }
-
-    public List<String> getText() {
+    public String getText() {
       return this.text;
     }
 
-    public ParseText_args setText(List<String> text) {
+    public ParseText_args setText(String text) {
       this.text = text;
       return this;
     }
@@ -1112,7 +1092,7 @@ public class ParseServer {
         if (value == null) {
           unsetText();
         } else {
-          setText((List<String>)value);
+          setText((String)value);
         }
         break;
 
@@ -1300,18 +1280,8 @@ public class ParseServer {
               }
               break;
             case 2: // TEXT
-              if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
-                {
-                  org.apache.thrift.protocol.TList _list8 = iprot.readListBegin();
-                  struct.text = new ArrayList<String>(_list8.size);
-                  for (int _i9 = 0; _i9 < _list8.size; ++_i9)
-                  {
-                    String _elem10; // required
-                    _elem10 = iprot.readString();
-                    struct.text.add(_elem10);
-                  }
-                  iprot.readListEnd();
-                }
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.text = iprot.readString();
                 struct.setTextIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
@@ -1339,14 +1309,7 @@ public class ParseServer {
         }
         if (struct.text != null) {
           oprot.writeFieldBegin(TEXT_FIELD_DESC);
-          {
-            oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.text.size()));
-            for (String _iter11 : struct.text)
-            {
-              oprot.writeString(_iter11);
-            }
-            oprot.writeListEnd();
-          }
+          oprot.writeString(struct.text);
           oprot.writeFieldEnd();
         }
         oprot.writeFieldStop();
@@ -1378,13 +1341,7 @@ public class ParseServer {
           oprot.writeString(struct.language);
         }
         if (struct.isSetText()) {
-          {
-            oprot.writeI32(struct.text.size());
-            for (String _iter12 : struct.text)
-            {
-              oprot.writeString(_iter12);
-            }
-          }
+          oprot.writeString(struct.text);
         }
       }
 
@@ -1397,16 +1354,7 @@ public class ParseServer {
           struct.setLanguageIsSet(true);
         }
         if (incoming.get(1)) {
-          {
-            org.apache.thrift.protocol.TList _list13 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.text = new ArrayList<String>(_list13.size);
-            for (int _i14 = 0; _i14 < _list13.size; ++_i14)
-            {
-              String _elem15; // required
-              _elem15 = iprot.readString();
-              struct.text.add(_elem15);
-            }
-          }
+          struct.text = iprot.readString();
           struct.setTextIsSet(true);
         }
       }
@@ -1723,13 +1671,13 @@ public class ParseServer {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list16 = iprot.readListBegin();
-                  struct.success = new ArrayList<String>(_list16.size);
-                  for (int _i17 = 0; _i17 < _list16.size; ++_i17)
+                  org.apache.thrift.protocol.TList _list8 = iprot.readListBegin();
+                  struct.success = new ArrayList<String>(_list8.size);
+                  for (int _i9 = 0; _i9 < _list8.size; ++_i9)
                   {
-                    String _elem18; // required
-                    _elem18 = iprot.readString();
-                    struct.success.add(_elem18);
+                    String _elem10; // required
+                    _elem10 = iprot.readString();
+                    struct.success.add(_elem10);
                   }
                   iprot.readListEnd();
                 }
@@ -1757,9 +1705,9 @@ public class ParseServer {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.success.size()));
-            for (String _iter19 : struct.success)
+            for (String _iter11 : struct.success)
             {
-              oprot.writeString(_iter19);
+              oprot.writeString(_iter11);
             }
             oprot.writeListEnd();
           }
@@ -1790,9 +1738,9 @@ public class ParseServer {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (String _iter20 : struct.success)
+            for (String _iter12 : struct.success)
             {
-              oprot.writeString(_iter20);
+              oprot.writeString(_iter12);
             }
           }
         }
@@ -1804,13 +1752,13 @@ public class ParseServer {
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list21 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.success = new ArrayList<String>(_list21.size);
-            for (int _i22 = 0; _i22 < _list21.size; ++_i22)
+            org.apache.thrift.protocol.TList _list13 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.success = new ArrayList<String>(_list13.size);
+            for (int _i14 = 0; _i14 < _list13.size; ++_i14)
             {
-              String _elem23; // required
-              _elem23 = iprot.readString();
-              struct.success.add(_elem23);
+              String _elem15; // required
+              _elem15 = iprot.readString();
+              struct.success.add(_elem15);
             }
           }
           struct.setSuccessIsSet(true);

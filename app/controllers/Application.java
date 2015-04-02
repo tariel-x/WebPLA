@@ -1,9 +1,13 @@
 package controllers;
 
+import java.util.*;
+
+import org.apache.commons.lang.StringUtils;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import models.ConllWord;
 import models.IWord;
+import models.RPCSyntax;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.index;
@@ -28,16 +32,15 @@ public class Application extends Controller {
                 return badRequest("Missing parameter [inputtext]");
             }
         }
+
+        String rpcserver = play.Play.application().configuration().getString("dependrpc.server");
+        Integer rpcport = play.Play.application().configuration().getInt("dependrpc.port");
+
+        RPCSyntax rpcclient = new RPCSyntax(rpcserver, rpcport);
+        List<String> conllLines = rpcclient.tagSentence(inputtext, "russian");
+        String conll = StringUtils.join(conllLines, "\n");
         IWord word = new ConllWord();
-//        word.fromConll("1\tА\tа\tCONJ\tCONJ\t_\t0\tROOT\n" +
-//                "2\tгосударство\tгосударство\tS\tS\tNOM|SG|N|INAN\t3\tSUBJ\n" +
-//                "3\tсможет\tмочь\tV\tV\tNPST|SG|REAL|3P|PERF\t1\tROOT\n" +
-//                "4\tизменить\tизменять\tVINF\tVINF\tINF|PERF\t3\tOBJ\n" +
-//                "5\tорганизационно-правовую\tорганизационно-правовой\tA\tA\tACC|SG|F\t6\tAMOD\n" +
-//                "6\tформу\tформа\tS\tS\tACC|SG|F|INAN\t4\tOBJ\n" +
-//                "7\tучреждения\tучреждение\tS\tS\tGEN|SG|N|INAN\t6\tROOT\n" +
-//                "8\tобратно?-\tобратно\tADV\tADV\t_\t4\tPOBJ");
-        word.fromConll(inputtext);
+        word.fromConll(conll);
         return ok(toJson(word.toPlayModel()));
     }
 }

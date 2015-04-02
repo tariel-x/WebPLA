@@ -59,7 +59,7 @@ public class RPCSyntax
         super.finalize(); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public List<String> tagSentence(List<String> sentence, String language)
+    public List<String> tagSentence(String sentence, String language)
     {
         List<String> ret = null;
         ParseServer.Client client = new ParseServer.Client(Protocol);

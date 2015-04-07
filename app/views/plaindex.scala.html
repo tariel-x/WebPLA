@@ -1,0 +1,11 @@
+@()
+
+@base("PLA Generator") {
+
+<script type='text/javascript' src='@routes.Assets.at("javascripts/plascript.js")'></script>
+
+<textarea id="inputtext" name="inputtext" cols="100" rows="10"></textarea>
+<br>
+<button onclick="click_btn('@routes.Application.createPla()')">Parse</button>
+<p id="plaresult"></p>
+}

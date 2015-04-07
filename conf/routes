@@ -6,7 +6,7 @@
 GET     /                           controllers.Application.index()
 POST    /conll                      controllers.Application.processConll()
 POST    /plasent                    controllers.Application.createPla()
-#GET     /plasent                    controllers.Application.createPla
+GET     /pla                        controllers.Application.plaindex()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

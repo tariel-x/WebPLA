@@ -9,6 +9,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.index;
+import views.html.plaindex;
+import play.data.Form;
 
 import static play.libs.Json.toJson;
 
@@ -19,7 +21,7 @@ public class Application extends Controller {
     }
 
     public static Result plaindex() {
-        return ok(index.render());
+        return ok(plaindex.render());
     }
 
 
@@ -47,16 +49,11 @@ public class Application extends Controller {
     }
 
     public static Result createPla() {
-        JsonNode json = request().body().asJson();
+
         String inputtext;
-        if(json == null) {
-            return badRequest("Expecting Json data");
-        } else {
-            inputtext = json.findPath("inputtext").textValue();
-            if(inputtext == null) {
-                return badRequest("Missing parameter [inputtext]");
-            }
-        }
+        Form<Request> userForm = Form.form(Request.class);
+        Request userreq = userForm.bindFromRequest().get();
+        inputtext = userreq.inputtext;
 
         String rpcserver = play.Play.application().configuration().getString("dependrpc.server");
         Integer rpcport = play.Play.application().configuration().getInt("dependrpc.port");

@@ -5,7 +5,8 @@
 # Home page
 GET     /                           controllers.Application.index()
 POST    /conll                      controllers.Application.processConll()
-#GET     /conll                      controllers.Application.processConll
+POST    /plasent                    controllers.Application.createPla()
+#GET     /plasent                    controllers.Application.createPla
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

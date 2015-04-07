@@ -74,3 +74,6 @@ logger.application=DEBUG
 # DependRPC server and port:
 dependrpc.server="127.0.0.1"
 dependrpc.port=1222
+# PLA server and port:
+plarpc.server="127.0.0.1"
+plarpc.port=1223

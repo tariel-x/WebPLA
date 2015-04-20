@@ -14,6 +14,7 @@ server.pid
 *.conf
 *.iml
 *.eml
+*.bin
 *.directory
 /dist/
 .cache

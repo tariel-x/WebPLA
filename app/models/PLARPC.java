@@ -4,8 +4,12 @@ package models;
  * Created by nikita on 02.04.15.
  */
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-import models.placlient.PLAServer;
+import java.io.*;
+
 import org.apache.thrift.TException;
 import org.apache.thrift.protocol.TBinaryProtocol;
 import org.apache.thrift.protocol.TProtocol;
@@ -15,8 +19,9 @@ import org.apache.thrift.transport.TTransport;
 import org.apache.thrift.transport.TTransportException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import opennlp.tools.sentdetect.*;
 
-import java.util.List;
+import models.placlient.PLAServer;
 
 /**
  *
@@ -57,13 +62,13 @@ public class PLARPC
         super.finalize(); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public String toPla(String sentence)
+    public String toPla(List<String> sentences)
     {
         String ret = null;
         PLAServer.Client client = new PLAServer.Client(Protocol);
         try
         {
-            ret = client.toDPL(sentence);
+            ret = client.toDPL(sentences);
         }
         catch (TTransportException e) {
             e.printStackTrace();
@@ -72,5 +77,57 @@ public class PLARPC
         }
         return ret;
     }
+
+    public String toPL(List<String> sentences)
+    {
+        String ret = null;
+        PLAServer.Client client = new PLAServer.Client(Protocol);
+        try
+        {
+            ret = client.toPL(sentences);
+        }
+        catch (TTransportException e) {
+            e.printStackTrace();
+        } catch (TException e) {
+            e.printStackTrace();
+        }
+        return ret;
+    }
+
+    public String resolveAnaphora(List<String> sentences)
+    {
+        String ret = null;
+        PLAServer.Client client = new PLAServer.Client(Protocol);
+        try
+        {
+            ret = client.resolveAnaphora(sentences);
+        }
+        catch (TTransportException e) {
+            e.printStackTrace();
+        } catch (TException e) {
+            e.printStackTrace();
+        }
+        return ret;
+    }
+
+    public String combo(List<String> sentences)
+    {
+        List<String> strs = new ArrayList<>();
+        String ret = "";
+        PLAServer.Client client = new PLAServer.Client(Protocol);
+        try
+        {
+            strs = client.combo(sentences);
+            ret = String.join("<br>", strs);
+        }
+        catch (TTransportException e) {
+            e.printStackTrace();
+        } catch (TException e) {
+            e.printStackTrace();
+        }
+        return ret;
+    }
+
+
 }
 
